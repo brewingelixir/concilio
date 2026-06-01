@@ -25,11 +25,11 @@ jobs:
           - target: macos_arm
             runner: macos-14
             rust_target: aarch64-apple-darwin
-            artifact_glob: "rel/app/src-tauri/target/release/bundle/{dmg,macos}/*"
+            artifact_glob: "rel/app/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg"
           - target: linux_x86
             runner: ubuntu-22.04
             rust_target: x86_64-unknown-linux-gnu
-            artifact_glob: "rel/app/src-tauri/target/release/bundle/{appimage,deb}/*"
+            artifact_glob: "rel/app/src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/appimage/*.AppImage rel/app/src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/deb/*.deb"
 
     env:
       MIX_ENV: prod
@@ -106,15 +106,30 @@ jobs:
       - name: collect artifacts
         shell: bash
         run: |
+          shopt -s nullglob extglob
           mkdir -p dist
-          cp -R ${{ matrix.artifact_glob }} dist/ 2>/dev/null || true
-          (cd dist && shasum -a 256 * > SHA256SUMS-${{ matrix.target }} 2>/dev/null || true)
+          # drop bundle_dmg.sh "rw.*" intermediate disk images, keep final installers
+          files=()
+          for f in ${{ matrix.artifact_glob }}; do
+            case "$(basename "$f")" in
+              rw.*) continue ;;
+            esac
+            files+=("$f")
+          done
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "::error::no installers matched ${{ matrix.artifact_glob }}"
+            find rel/app/src-tauri/target -type d -name bundle -exec find {} -maxdepth 2 \;
+            exit 1
+          fi
+          cp "${files[@]}" dist/
+          (cd dist && shasum -a 256 * > SHA256SUMS-${{ matrix.target }})
 
       - name: upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: concilio-${{ matrix.target }}
           path: dist/*
+          if-no-files-found: error
 
   release:
     name: publish release
