@@ -25,10 +25,12 @@ jobs:
           - target: macos_arm
             runner: macos-14
             rust_target: aarch64-apple-darwin
+            rel_os: darwin
             artifact_glob: "rel/app/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg"
           - target: linux_x86
             runner: ubuntu-22.04
             rust_target: x86_64-unknown-linux-gnu
+            rel_os: linux
             artifact_glob: "rel/app/src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/appimage/*.AppImage rel/app/src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/deb/*.deb"
 
     env:
@@ -96,12 +98,18 @@ jobs:
 
       - name: build mix app release
         run: |
-          mix release app --overwrite --path rel/app/src-tauri/rel-${{ runner.os == 'macOS' && 'darwin' || (runner.os == 'Linux' && 'linux' || 'windows') }}
+          mix release app --overwrite --path rel/app/src-tauri/rel-${{ matrix.rel_os }}
 
       - name: cargo tauri build
         working-directory: rel/app/src-tauri
+        # The resources override bundles the per-OS Elixir release into
+        # the app at Contents/Resources/rel — the Rust shell loads the
+        # BEAM from resource_dir()/rel/bin/app. Mirrors rel/app/tauri.sh;
+        # WITHOUT it the release isn't packaged and the app aborts on
+        # launch ("BEAM release binary not found").
         run: |
-          cargo tauri build --target ${{ matrix.rust_target }}
+          cargo tauri build --target ${{ matrix.rust_target }} \
+            --config '{"bundle":{"resources":{"rel-${{ matrix.rel_os }}":"rel"}}}'
 
       - name: collect artifacts
         shell: bash
