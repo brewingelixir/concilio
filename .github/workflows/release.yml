@@ -26,10 +26,6 @@ jobs:
             runner: macos-14
             rust_target: aarch64-apple-darwin
             artifact_glob: "rel/app/src-tauri/target/release/bundle/{dmg,macos}/*"
-          - target: macos_x86
-            runner: macos-13
-            rust_target: x86_64-apple-darwin
-            artifact_glob: "rel/app/src-tauri/target/release/bundle/{dmg,macos}/*"
           - target: linux_x86
             runner: ubuntu-22.04
             rust_target: x86_64-unknown-linux-gnu
