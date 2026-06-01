@@ -72,6 +72,10 @@ jobs:
         with:
           node-version: "20"
 
+      - name: install npm deps (esbuild bundles cytoscape et al.)
+        shell: bash
+        run: npm ci --prefix assets
+
       - name: linux deps (webkit2gtk + appindicator)
         if: runner.os == 'Linux'
         run: |
