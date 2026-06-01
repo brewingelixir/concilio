@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Concilio dev helper. Wraps the most common build / run loops so
+# you don't have to remember the exact mise / mix incantations.
+#
+# Usage: ./scripts/dev <command> [args]
+#
+# Commands:
+#   build              Build the Tauri desktop app (.app, .dmg attempt, etc).
+#   app                Build + launch the .app via tauri.sh.
+#   release            Vanilla `mix release concilio` (Erlang tarball).
+#   release-app        Just the mix-side `mix release app` (no Tauri wrap).
+#   server             `mix phx.server` in dev (CONCILIO_APP=1 exposes /dev/dashboard).
+#   test               Mix test suite.
+#   precommit          mix precommit gate (compile --warnings-as-errors + test).
+#   clean              Wipe Mix + Rust build caches. Keeps deps + node_modules.
+#   doctor             Print versions of mise-managed tools.
+#
+# All commands run via `mise exec --` so the pinned mise tool versions
+# (Elixir, Rust, Zig, Node) are always used regardless of the parent
+# shell's PATH.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+cmd="${1:-help}"
+shift || true
+
+case "$cmd" in
+  build)
+    exec mise exec -- bash rel/app/tauri.sh build "$@"
+    ;;
+  app)
+    exec mise exec -- bash rel/app/tauri.sh app "$@"
+    ;;
+  release)
+    exec mise exec -- env MIX_ENV=prod mix release concilio --overwrite "$@"
+    ;;
+  release-app)
+    exec mise exec -- env CONCILIO_APP=1 MIX_ENV=prod mix release app --overwrite "$@"
+    ;;
+  server)
+    exec mise exec -- env CONCILIO_APP="${CONCILIO_APP:-1}" mix phx.server "$@"
+    ;;
+  test)
+    exec mise exec -- mix test "$@"
+    ;;
+  precommit)
+    exec mise exec -- mix precommit "$@"
+    ;;
+  clean)
+    rm -rf _build deps/.compile.lock rel/app/src-tauri/target rel/app/src-tauri/rel-darwin rel/app/src-tauri/rel-linux rel/app/src-tauri/rel-windows
+    echo "Wiped _build, target, and rel-* dirs."
+    ;;
+  doctor)
+    mise ls
+    ;;
+  help|-h|--help)
+    sed -n 's/^# \{0,1\}//p' "$0" | sed -n '/^Usage:/,/^All commands run/ p'
+    ;;
+  *)
+    echo "unknown command: $cmd" >&2
+    echo "Run \`./scripts/dev help\` for the list." >&2
+    exit 2
+    ;;
+esac

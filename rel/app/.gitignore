@@ -1,0 +1,12 @@
+# Mix release output bundled into Tauri at build time.
+src-tauri/rel-darwin/
+src-tauri/rel-linux/
+src-tauri/rel-windows/
+
+# Rust + Tauri build artifacts.
+src-tauri/target/
+src-tauri/Cargo.lock.bak
+
+# Tauri-generated capability schemas (auto-derived from
+# capabilities/*.json each build).
+src-tauri/gen/

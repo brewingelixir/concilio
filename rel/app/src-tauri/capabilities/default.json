@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Tray-only shell — no windows; opens URLs via the user's default browser.",
+  "windows": [],
+  "permissions": [
+    "core:default",
+    "shell:allow-open"
+  ]
+}

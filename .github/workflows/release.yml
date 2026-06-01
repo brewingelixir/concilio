@@ -1,0 +1,145 @@
+name: release
+
+# Builds the Concilio Tauri desktop app for macOS / Linux / Windows
+# and attaches binaries to a GitHub Release on tag push (`v*`).
+# Manual dispatch is supported for dry runs (binaries land as
+# workflow artifacts but no Release is published).
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build (${{ matrix.target }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: macos_arm
+            runner: macos-14
+            rust_target: aarch64-apple-darwin
+            artifact_glob: "rel/app/src-tauri/target/release/bundle/{dmg,macos}/*"
+          - target: macos_x86
+            runner: macos-13
+            rust_target: x86_64-apple-darwin
+            artifact_glob: "rel/app/src-tauri/target/release/bundle/{dmg,macos}/*"
+          - target: linux_arm
+            runner: ubuntu-22.04-arm
+            rust_target: aarch64-unknown-linux-gnu
+            artifact_glob: "rel/app/src-tauri/target/release/bundle/{appimage,deb}/*"
+          - target: linux_x86
+            runner: ubuntu-22.04
+            rust_target: x86_64-unknown-linux-gnu
+            artifact_glob: "rel/app/src-tauri/target/release/bundle/{appimage,deb}/*"
+          - target: windows_x86
+            runner: windows-2022
+            rust_target: x86_64-pc-windows-msvc
+            artifact_glob: "rel/app/src-tauri/target/release/bundle/nsis/*"
+
+    env:
+      MIX_ENV: prod
+      CONCILIO_APP: "1"
+      CONCILIO_BUNDLE_ALL: "1"
+      ELIXIR_VERSION: "1.18.4"
+      OTP_VERSION: "27.2"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install Erlang + Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ env.OTP_VERSION }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+
+      - name: install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_target }}
+
+      - name: install Tauri CLI
+        run: cargo install tauri-cli --version "^2.0" --locked
+
+      - name: install Node (asset build)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: linux deps (webkit2gtk + appindicator)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            libssl-dev \
+            patchelf
+
+      - name: cache deps + Rust target
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+            rel/app/src-tauri/target
+          key: ${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('mix.lock', 'rel/app/src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.target }}-
+
+      - name: fetch deps
+        run: mix deps.get --only prod
+
+      - name: compile + assets
+        run: |
+          mix compile
+          mix assets.deploy
+
+      - name: build mix app release
+        run: |
+          mix release app --overwrite --path rel/app/src-tauri/rel-${{ runner.os == 'macOS' && 'darwin' || (runner.os == 'Linux' && 'linux' || 'windows') }}
+
+      - name: cargo tauri build
+        working-directory: rel/app/src-tauri
+        run: |
+          cargo tauri build --target ${{ matrix.rust_target }}
+
+      - name: collect artifacts
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp -R ${{ matrix.artifact_glob }} dist/ 2>/dev/null || true
+          (cd dist && shasum -a 256 * > SHA256SUMS-${{ matrix.target }} 2>/dev/null || true)
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: concilio-${{ matrix.target }}
+          path: dist/*
+
+  release:
+    name: publish release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: combine checksums
+        run: cat dist/SHA256SUMS-* > dist/SHA256SUMS && rm dist/SHA256SUMS-*
+
+      - name: publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

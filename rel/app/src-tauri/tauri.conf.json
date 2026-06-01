@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Concilio",
+  "version": "0.1.0",
+  "identifier": "app.concilio.Concilio",
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "frontendDist": "../frontend-stub"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "macOSPrivateApi": false,
+    "windows": [],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg", "nsis", "appimage", "deb"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/AppIcon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "entitlements": "App.entitlements",
+      "exceptionDomain": null,
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "windows": {
+      "nsis": {
+        "installerIcon": "icons/icon.ico"
+      }
+    }
+  },
+  "plugins": {}
+}

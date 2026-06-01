@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Tray template — black on transparent. macOS tints monochrome
+  templates to match the menu bar (light / dark / accent).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <line x1="16" y1="16" x2="16" y2="5" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="16" x2="6.47" y2="21.5" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="16" x2="25.53" y2="21.5" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="16" cy="5" r="3" fill="#000"/>
+  <circle cx="6.47" cy="21.5" r="3" fill="#000"/>
+  <circle cx="25.53" cy="21.5" r="3" fill="#000"/>
+  <circle cx="16" cy="16" r="4.25" fill="#000"/>
+</svg>

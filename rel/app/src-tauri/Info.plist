@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!--
+    LSUIElement = true: Concilio lives in the menu bar only. No
+    dock icon, no app-switcher entry, no main window. Tray menu
+    items open URLs in the user's default browser. Mirrors
+    Livebook's pattern.
+  -->
+  <key>LSUIElement</key>
+  <true/>
+  <key>LSEnvironment</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+</dict>
+</plist>
