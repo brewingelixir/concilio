@@ -124,15 +124,19 @@ NSApp `terminate:`, signal, panic — cleans up the BEAM. No orphans.
 
 ### macOS Gatekeeper
 
-Local and CI builds are unsigned. macOS Gatekeeper will refuse to
-launch them on first run. Strip the quarantine attribute:
+Local and CI builds are unsigned. macOS Gatekeeper refuses to
+launch them on first run — on Apple Silicon it shows *"Concilio is
+damaged and can't be opened"* (it isn't; that's the unsigned-app
+quarantine). Strip the quarantine attribute **recursively** (the
+non-recursive `xattr -d` leaves the flag on the bundled runtime
+inside the `.app` and the "damaged" error persists):
 
 ```sh
-xattr -d com.apple.quarantine /Applications/Concilio.app
+xattr -dr com.apple.quarantine /Applications/Concilio.app
 ```
 
-Or right-click → Open the first time and click **Open** in the
-warning dialog. Apple Developer signing + notarization is deferred
+Right-click → Open does *not* clear the "damaged" state — use the
+`xattr` command. Apple Developer signing + notarization is deferred
 to a future release.
 
 ### Windows SmartScreen

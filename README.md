@@ -74,22 +74,34 @@ A *council* is structured peer review among models: specialized **members** run 
 
 ### Install the desktop app
 
-Once a release is cut, downloads will live on the
+Download a prebuilt installer from the
 [Releases page](https://github.com/brewingelixir/concilio/releases) — pick
 the file for your platform:
 
 | Platform | File |
 |---|---|
 | macOS (Apple Silicon) | `Concilio_*_aarch64.dmg` |
-| macOS (Intel) | `Concilio_*_x86_64.dmg` |
 | Linux (x86_64) | `concilio_*_amd64.AppImage` or `.deb` |
-| Linux (ARM64) | `concilio_*_arm64.AppImage` or `.deb` |
-| Windows | `Concilio_*_x86_64-setup.exe` |
 
-On macOS, drag `Concilio.app` into `Applications` and double-click
-to launch. The first launch is unsigned, so Gatekeeper will warn —
-right-click → **Open** the first time, or run
-`xattr -d com.apple.quarantine /Applications/Concilio.app`.
+> Only Apple-Silicon macOS and x86_64 Linux are built today. macOS
+> (Intel), Linux (ARM64), and Windows are not yet published — build
+> them from source (see below) or open an issue if you need a
+> prebuilt binary.
+
+On macOS, open the `.dmg` and drag `Concilio.app` into
+`Applications`. The app is **unsigned**, so on first launch
+Gatekeeper blocks it — and on Apple Silicon it shows the misleading
+message *"Concilio is damaged and can't be opened. You should move
+it to the Trash."* It is not damaged; macOS quarantines unsigned
+apps downloaded from the internet. Clear the quarantine flag
+(recursive — covers the bundled runtime inside the app):
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Concilio.app
+```
+
+Then double-click to launch. (Right-click → **Open** does *not*
+work for the "damaged" case — use the `xattr` command.)
 
 What you get on launch:
 
