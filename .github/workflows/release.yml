@@ -43,7 +43,7 @@ jobs:
       OTP_VERSION: "27.2"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: install Erlang + Elixir
         uses: erlef/setup-beam@v1
@@ -60,7 +60,7 @@ jobs:
         run: cargo install tauri-cli --version "^2.0" --locked
 
       - name: install Node (asset build)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
 
@@ -80,7 +80,7 @@ jobs:
             patchelf
 
       - name: cache deps + Rust target
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             deps
@@ -115,7 +115,7 @@ jobs:
           (cd dist && shasum -a 256 * > SHA256SUMS-${{ matrix.target }} 2>/dev/null || true)
 
       - name: upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: concilio-${{ matrix.target }}
           path: dist/*
@@ -126,7 +126,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
