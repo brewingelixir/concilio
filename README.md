@@ -4,11 +4,11 @@
   <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/header.png" alt="Concilio — multi-model LLM councils" width="820">
 </p>
 
-**Run a panel of LLMs that deliberate, critique each other, and synthesize one answer — locally, on your machine.**
+**Run a panel of LLMs that deliberate, critique each other, and synthesize one answer — from a single app on your machine.**
 
 Concilio is the open-source companion app for [`council_ex`](https://github.com/brewingelixir/council_ex). Point it at any LLM provider, ask a question, and watch a few models argue it out and converge. Save the conversation, build your own councils, inspect every run.
 
-Single user. Local first. SQLite by default (Postgres opt-in). Phoenix LiveView.
+The app runs on your machine, and your conversations, keys, and history stay there. The models live wherever you point Concilio: cloud APIs like OpenAI, Anthropic, Gemini, and OpenRouter, or Ollama if you want inference local too. SQLite by default, Postgres if you'd rather. Phoenix LiveView.
 
 ## What's a council?
 
