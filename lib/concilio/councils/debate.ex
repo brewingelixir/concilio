@@ -5,10 +5,10 @@ defmodule Concilio.Councils.Debate do
 
   use CouncilEx
 
-  alias Concilio.Councils.Members.{Con, Moderator, Pro}
+  alias Concilio.Councils.Members.{Contra, Moderator, Pro}
 
   member(:pro, Pro, provider: :openai, model: "gpt-5.4-mini")
-  member(:con, Con, provider: :openai, model: "gpt-5.4-mini")
+  member(:con, Contra, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
   round(:peer_review)

@@ -1,4 +1,4 @@
-defmodule Concilio.Councils.Members.Con do
+defmodule Concilio.Councils.Members.Contra do
   @moduledoc false
   use CouncilEx.Member
 

@@ -26,8 +26,8 @@
   # raise(...)` pattern for role/system_prompt. Every member declares
   # both at compile time, so dialyzer flags the fallback as dead.
   {"lib/concilio/councils/members/advocate.ex", :guard_fail},
-  {"lib/concilio/councils/members/con.ex", :guard_fail},
   {"lib/concilio/councils/members/conservative.ex", :guard_fail},
+  {"lib/concilio/councils/members/contra.ex", :guard_fail},
   {"lib/concilio/councils/members/echo.ex", :guard_fail},
   {"lib/concilio/councils/members/judge.ex", :guard_fail},
   {"lib/concilio/councils/members/liberal.ex", :guard_fail},

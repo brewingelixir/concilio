@@ -30,18 +30,10 @@ jobs:
             runner: macos-13
             rust_target: x86_64-apple-darwin
             artifact_glob: "rel/app/src-tauri/target/release/bundle/{dmg,macos}/*"
-          - target: linux_arm
-            runner: ubuntu-22.04-arm
-            rust_target: aarch64-unknown-linux-gnu
-            artifact_glob: "rel/app/src-tauri/target/release/bundle/{appimage,deb}/*"
           - target: linux_x86
             runner: ubuntu-22.04
             rust_target: x86_64-unknown-linux-gnu
             artifact_glob: "rel/app/src-tauri/target/release/bundle/{appimage,deb}/*"
-          - target: windows_x86
-            runner: windows-2022
-            rust_target: x86_64-pc-windows-msvc
-            artifact_glob: "rel/app/src-tauri/target/release/bundle/nsis/*"
 
     env:
       MIX_ENV: prod
