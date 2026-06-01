@@ -37,8 +37,14 @@ defmodule Concilio.CryptoTest do
 
   test "tampered ciphertext fails to decrypt" do
     ct = Crypto.encrypt("secret")
-    flipped = :binary.replace(ct, binary_part(ct, byte_size(ct) - 1, 1), <<0>>)
+    # Flip the low bit of the last byte by position. (The previous
+    # :binary.replace approach searched by byte *value* and was a no-op
+    # whenever the last byte was already 0x00 — a ~1/256 flake.)
+    last = byte_size(ct) - 1
+    <<head::binary-size(last), b>> = ct
+    flipped = <<head::binary, Bitwise.bxor(b, 1)>>
 
+    refute flipped == ct
     assert :error = Crypto.decrypt(flipped)
   end
 
