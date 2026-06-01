@@ -29,7 +29,7 @@ defmodule Concilio.Councils.PrReview do
   member :sec do
     role("Security Reviewer")
     provider(:openai)
-    model("gpt-4o-mini")
+    model("gpt-5.4-mini")
 
     system_prompt("""
     You are a security reviewer reading a pull request diff. List concrete
@@ -46,7 +46,7 @@ defmodule Concilio.Councils.PrReview do
   member :perf do
     role("Performance Reviewer")
     provider(:openai)
-    model("gpt-4o-mini")
+    model("gpt-5.4-mini")
 
     system_prompt("""
     You are a performance reviewer reading a pull request diff. Flag
@@ -63,7 +63,7 @@ defmodule Concilio.Councils.PrReview do
   member :style do
     role("Style Reviewer")
     provider(:openai)
-    model("gpt-4o-mini")
+    model("gpt-5.4-mini")
 
     system_prompt("""
     You are a style and maintainability reviewer reading a pull request

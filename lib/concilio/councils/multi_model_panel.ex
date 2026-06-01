@@ -7,7 +7,7 @@ defmodule Concilio.Councils.MultiModelPanel do
 
   alias Concilio.Councils.Members.{Optimist, Pragmatist, Skeptic, Synthesizer}
 
-  member(:pragmatist, Pragmatist, provider: :openai, model: "gpt-4o-mini")
+  member(:pragmatist, Pragmatist, provider: :openai, model: "gpt-5.4-mini")
   member(:skeptic, Skeptic, provider: :anthropic, model: "claude-haiku-4-5")
   member(:optimist, Optimist, provider: :gemini, model: "gemini-2.5-flash")
 

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="440" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.55" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#131f3a"/>
+    </linearGradient>
+    <radialGradient id="hubGlow" cx="560" cy="220" r="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.35"/>
+      <stop offset="0.5" stop-color="#6366f1" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="g1" x1="150" y1="80"  x2="560" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a78bfa" stop-opacity="0.85"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="g2" x1="90"  y1="210" x2="560" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.85"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="g3" x1="140" y1="350" x2="560" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#34d399" stop-opacity="0.85"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="g4" x1="340" y1="60"  x2="560" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.85"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="g5" x1="360" y1="380" x2="560" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.85"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="g6" x1="480" y1="150" x2="560" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fb7185" stop-opacity="0.85"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="out" x1="560" y1="220" x2="815" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e2e8f0" stop-opacity="0.95"/><stop offset="1" stop-color="#e2e8f0" stop-opacity="0"/></linearGradient>
+
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="1280" height="440" fill="url(#bg)"/>
+  <rect width="1280" height="440" fill="url(#hubGlow)"/>
+
+  <!-- distant particles for depth -->
+  <g fill="#334155" opacity="0.5">
+    <circle cx="60" cy="60" r="2"/><circle cx="250" cy="200" r="1.5"/><circle cx="420" cy="300" r="2"/>
+    <circle cx="700" cy="90" r="2"/><circle cx="900" cy="360" r="1.5"/><circle cx="1050" cy="120" r="2"/>
+    <circle cx="1180" cy="300" r="1.5"/><circle cx="980" cy="220" r="1.5"/><circle cx="1120" cy="380" r="2"/>
+    <circle cx="40" cy="380" r="1.5"/><circle cx="640" cy="380" r="1.5"/><circle cx="760" cy="40" r="1.5"/>
+  </g>
+
+  <!-- connectors: blurred glow copy then crisp stroke -->
+  <g fill="none" stroke-linecap="round">
+    <g filter="url(#glow)" opacity="0.55" stroke-width="5">
+      <path d="M150,80  C 300,120 380,180 560,220" stroke="url(#g1)"/>
+      <path d="M90,210  C 250,200 380,210 560,220" stroke="url(#g2)"/>
+      <path d="M140,350 C 300,330 400,270 560,220" stroke="url(#g3)"/>
+      <path d="M340,60  C 420,110 470,160 560,220" stroke="url(#g4)"/>
+      <path d="M360,380 C 440,330 490,280 560,220" stroke="url(#g5)"/>
+      <path d="M480,150 C 510,170 530,190 560,220" stroke="url(#g6)"/>
+    </g>
+    <g stroke-width="1.75" opacity="0.95">
+      <path d="M150,80  C 300,120 380,180 560,220" stroke="url(#g1)"/>
+      <path d="M90,210  C 250,200 380,210 560,220" stroke="url(#g2)"/>
+      <path d="M140,350 C 300,330 400,270 560,220" stroke="url(#g3)"/>
+      <path d="M340,60  C 420,110 470,160 560,220" stroke="url(#g4)"/>
+      <path d="M360,380 C 440,330 490,280 560,220" stroke="url(#g5)"/>
+      <path d="M480,150 C 510,170 530,190 560,220" stroke="url(#g6)"/>
+    </g>
+  </g>
+
+  <!-- output line: synthesis flowing into the wordmark -->
+  <path d="M560,220 C 660,220 720,220 815,220" fill="none" stroke="url(#out)" stroke-width="2.25" stroke-linecap="round"/>
+
+  <!-- outer model nodes -->
+  <g>
+    <g filter="url(#softGlow)" opacity="0.7">
+      <circle cx="150" cy="80"  r="9" fill="#a78bfa"/>
+      <circle cx="90"  cy="210" r="9" fill="#22d3ee"/>
+      <circle cx="140" cy="350" r="9" fill="#34d399"/>
+      <circle cx="340" cy="60"  r="9" fill="#38bdf8"/>
+      <circle cx="360" cy="380" r="9" fill="#fbbf24"/>
+      <circle cx="480" cy="150" r="9" fill="#fb7185"/>
+    </g>
+    <circle cx="150" cy="80"  r="6.5" fill="#a78bfa"/><circle cx="150" cy="80"  r="2.4" fill="#f8fafc"/>
+    <circle cx="90"  cy="210" r="6.5" fill="#22d3ee"/><circle cx="90"  cy="210" r="2.4" fill="#f8fafc"/>
+    <circle cx="140" cy="350" r="6.5" fill="#34d399"/><circle cx="140" cy="350" r="2.4" fill="#f8fafc"/>
+    <circle cx="340" cy="60"  r="6.5" fill="#38bdf8"/><circle cx="340" cy="60"  r="2.4" fill="#f8fafc"/>
+    <circle cx="360" cy="380" r="6.5" fill="#fbbf24"/><circle cx="360" cy="380" r="2.4" fill="#f8fafc"/>
+    <circle cx="480" cy="150" r="6.5" fill="#fb7185"/><circle cx="480" cy="150" r="2.4" fill="#f8fafc"/>
+  </g>
+
+  <!-- chairman hub -->
+  <circle cx="560" cy="220" r="30" fill="#38bdf8" opacity="0.18" filter="url(#softGlow)"/>
+  <circle cx="560" cy="220" r="17" fill="none" stroke="#cbd5e1" stroke-width="1.25" opacity="0.55"/>
+  <circle cx="560" cy="220" r="11" fill="#f8fafc"/>
+  <circle cx="560" cy="220" r="11" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.6"/>
+
+  <!-- wordmark + tagline -->
+  <text x="815" y="218" font-size="96" font-weight="700" letter-spacing="-2" fill="#f8fafc">Concilio</text>
+  <text x="818" y="266" font-size="27" font-weight="500" letter-spacing="0.5" fill="#94a3b8">Multi-model LLM councils</text>
+</svg>

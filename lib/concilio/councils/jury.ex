@@ -13,9 +13,9 @@ defmodule Concilio.Councils.Jury do
 
   alias Concilio.Councils.Members.{Echo, Synthesizer}
 
-  member(:judge_alpha, Echo, provider: :openai, model: "gpt-4o-mini", confidence: :self_report)
-  member(:judge_beta, Echo, provider: :openai, model: "gpt-4o-mini", confidence: :self_report)
-  member(:judge_gamma, Echo, provider: :openai, model: "gpt-4o-mini", confidence: :self_report)
+  member(:judge_alpha, Echo, provider: :openai, model: "gpt-5.4-mini", confidence: :self_report)
+  member(:judge_beta, Echo, provider: :openai, model: "gpt-5.4-mini", confidence: :self_report)
+  member(:judge_gamma, Echo, provider: :openai, model: "gpt-5.4-mini", confidence: :self_report)
 
   @doc false
   def __jury_converged__(_prev, %CouncilEx.RoundResult{member_results: mrs}) do
@@ -36,7 +36,7 @@ defmodule Concilio.Councils.Jury do
     max_iterations: 2
   )
 
-  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-4o-mini")
+  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [

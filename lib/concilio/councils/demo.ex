@@ -1,19 +1,19 @@
 defmodule Concilio.Councils.Demo do
   @moduledoc """
-  Three Echo members analyse the question independently; a Synthesizer chair merges the answers. Single round, OpenAI gpt-4o-mini throughout.
+  Three Echo members analyse the question independently; a Synthesizer chair merges the answers. Single round, OpenAI gpt-5.4-mini throughout.
   """
 
   use CouncilEx
 
   alias Concilio.Councils.Members.{Echo, Synthesizer}
 
-  member(:alpha, Echo, provider: :openai, model: "gpt-4o-mini")
-  member(:beta, Echo, provider: :openai, model: "gpt-4o-mini")
-  member(:gamma, Echo, provider: :openai, model: "gpt-4o-mini")
+  member(:alpha, Echo, provider: :openai, model: "gpt-5.4-mini")
+  member(:beta, Echo, provider: :openai, model: "gpt-5.4-mini")
+  member(:gamma, Echo, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
 
-  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-4o-mini")
+  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [

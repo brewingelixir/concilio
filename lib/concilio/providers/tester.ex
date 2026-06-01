@@ -5,8 +5,14 @@ defmodule Concilio.Providers.Tester do
   up by `Concilio.Providers.Runtime`) and records the latency + status
   on the row.
 
-  Prompt is `"Reply with the single word: pong"` with `max_tokens: 8`,
-  `temperature: 0` so it costs roughly nothing on hosted providers.
+  Prompt is `"Reply with the single word: pong"` — the prompt itself
+  bounds output to roughly nothing on hosted providers. We deliberately
+  send NO `max_tokens` / `temperature`: council_ex 0.1.0's OpenAI
+  adapter emits the legacy `max_tokens` param, which gpt-5.x / o-series
+  models reject (they require `max_completion_tokens`), and those models
+  also reject `temperature != 1`. Omitting both keeps the ping
+  compatible across every model family. See
+  `docs/CONCILIO_OPEN_QUESTIONS.md`.
   """
 
   require Logger
@@ -16,8 +22,6 @@ defmodule Concilio.Providers.Tester do
   alias Concilio.Providers.Model
 
   @prompt [%{role: "user", content: "Reply with the single word: pong"}]
-  @max_tokens 8
-  @temperature 0.0
 
   @type result :: %{status: :ok | :error, latency_ms: integer(), error: String.t() | nil}
 
@@ -57,10 +61,7 @@ defmodule Concilio.Providers.Tester do
   end
 
   defp do_completion(provider, model_id) do
-    case Completion.run(provider, model_id, @prompt,
-           max_tokens: @max_tokens,
-           temperature: @temperature
-         ) do
+    case Completion.run(provider, model_id, @prompt) do
       {:ok, _content} ->
         %{status: :ok, error: nil}
 

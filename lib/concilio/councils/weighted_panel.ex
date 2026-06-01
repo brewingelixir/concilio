@@ -11,14 +11,14 @@ defmodule Concilio.Councils.WeightedPanel do
 
   alias Concilio.Councils.Members.{Echo, Synthesizer}
 
-  member(:alpha, Echo, provider: :openai, model: "gpt-4o-mini", confidence: :self_report)
-  member(:beta, Echo, provider: :openai, model: "gpt-4o-mini", confidence: :self_report)
-  member(:gamma, Echo, provider: :openai, model: "gpt-4o-mini", confidence: :self_report)
+  member(:alpha, Echo, provider: :openai, model: "gpt-5.4-mini", confidence: :self_report)
+  member(:beta, Echo, provider: :openai, model: "gpt-5.4-mini", confidence: :self_report)
+  member(:gamma, Echo, provider: :openai, model: "gpt-5.4-mini", confidence: :self_report)
 
   round(:independent_analysis)
   round(CouncilEx.Rounds.WeightedSynthesis, expose_confidence: true)
 
-  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-4o-mini")
+  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [

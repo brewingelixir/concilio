@@ -13,10 +13,10 @@ defmodule Concilio.Councils.PresidentialDebate do
     Pundit
   }
 
-  member(:liberal, Liberal, provider: :openai, model: "gpt-4o-mini")
-  member(:conservative, Conservative, provider: :openai, model: "gpt-4o-mini")
-  member(:progressive, Progressive, provider: :openai, model: "gpt-4o-mini")
-  member(:libertarian, Libertarian, provider: :openai, model: "gpt-4o-mini")
+  member(:liberal, Liberal, provider: :openai, model: "gpt-5.4-mini")
+  member(:conservative, Conservative, provider: :openai, model: "gpt-5.4-mini")
+  member(:progressive, Progressive, provider: :openai, model: "gpt-5.4-mini")
+  member(:libertarian, Libertarian, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
   round(:peer_review)

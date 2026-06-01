@@ -7,12 +7,12 @@ defmodule Concilio.Councils.ParallelPanel do
 
   alias Concilio.Councils.Members.{Optimist, Skeptic, Synthesizer}
 
-  member(:optimist, Optimist, provider: :openai, model: "gpt-4o-mini")
-  member(:skeptic, Skeptic, provider: :openai, model: "gpt-4o-mini")
+  member(:optimist, Optimist, provider: :openai, model: "gpt-5.4-mini")
+  member(:skeptic, Skeptic, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
 
-  chair(Synthesizer, id: :chair, provider: :openai, model: "gpt-4o-mini")
+  chair(Synthesizer, id: :chair, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [

@@ -7,13 +7,13 @@ defmodule Concilio.Councils.Critique do
 
   alias Concilio.Councils.Members.{Echo, Synthesizer}
 
-  member(:proposer, Echo, provider: :openai, model: "gpt-4o-mini")
-  member(:builder, Echo, provider: :openai, model: "gpt-4o-mini")
+  member(:proposer, Echo, provider: :openai, model: "gpt-5.4-mini")
+  member(:builder, Echo, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
   round(:critique)
 
-  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-4o-mini")
+  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [

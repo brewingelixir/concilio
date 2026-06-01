@@ -7,9 +7,9 @@ defmodule Concilio.Councils.CreativeJudge do
 
   alias Concilio.Councils.Members.{Judge, Writer}
 
-  member(:a, Writer, provider: :openai, model: "gpt-4o-mini")
-  member(:b, Writer, provider: :openai, model: "gpt-4o-mini")
-  member(:c, Writer, provider: :openai, model: "gpt-4o-mini")
+  member(:a, Writer, provider: :openai, model: "gpt-5.4-mini")
+  member(:b, Writer, provider: :openai, model: "gpt-5.4-mini")
+  member(:c, Writer, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
 

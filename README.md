@@ -1,5 +1,9 @@
 # Concilio
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/header.png" alt="Concilio — multi-model LLM councils" width="820">
+</p>
+
 **Run a panel of LLMs that deliberate, critique each other, and synthesize one answer — locally, on your machine.**
 
 Concilio is the open-source companion app for [`council_ex`](https://github.com/brewingelixir/council_ex). Point it at any LLM provider, ask a question, and watch a few models argue it out and converge. Save the conversation, build your own councils, inspect every run.
@@ -19,6 +23,48 @@ A *council* is structured peer review among models: specialized **members** run 
 - **Providers** — enable providers, paste keys (encrypted at rest, AES-256-GCM, key derived from `CONCILIO_SECRET`), curate a working set of models, ping-test each one. OpenAI, Anthropic, Gemini, OpenRouter, Ollama.
 - **Native menu-bar app** — macOS / Linux / Windows. No dock icon, no embedded WebView; the BEAM runs in the background, your default browser is the UI. Tray menu: Open / Settings / Dashboard / Reset Auth Token / Quit.
 - **Background jobs** — Oban handles auto-titling, OpenRouter catalog refresh, run-event cleanup.
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%">
+      <a href="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/chat.png">
+        <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/chat.png" alt="Chat with any model" width="100%">
+      </a>
+      <p align="center"><sub><b>Chat</b> — talk to any model in your working set</sub></p>
+    </td>
+    <td width="50%">
+      <a href="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/summon-council.png">
+        <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/summon-council.png" alt="Summon a council mid-thread" width="100%">
+      </a>
+      <p align="center"><sub><b>Summon a council</b> mid-thread — template + question</sub></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <a href="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/council-reply.png">
+        <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/council-reply.png" alt="Council deliberates and synthesizes" width="100%">
+      </a>
+      <p align="center"><sub><b>Council reply</b> — members deliberate, chair synthesizes</sub></p>
+    </td>
+    <td width="50%">
+      <a href="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/councils.png">
+        <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/councils.png" alt="Council library" width="100%">
+      </a>
+      <p align="center"><sub><b>Council library</b> — static, prebuilt, and dynamic</sub></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <a href="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/run-timeline.png">
+        <img src="https://raw.githubusercontent.com/brewingelixir/concilio/main/docs/assets/run-timeline.png" alt="Run timeline" width="100%">
+      </a>
+      <p align="center"><sub><b>Run timeline</b> — every run persisted, with replay + re-run</sub></p>
+    </td>
+    <td width="50%"></td>
+  </tr>
+</table>
 
 ## Status
 

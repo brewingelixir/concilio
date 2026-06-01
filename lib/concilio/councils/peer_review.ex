@@ -7,14 +7,14 @@ defmodule Concilio.Councils.PeerReview do
 
   alias Concilio.Councils.Members.{Echo, Synthesizer}
 
-  member(:alpha, Echo, provider: :openai, model: "gpt-4o-mini")
-  member(:beta, Echo, provider: :openai, model: "gpt-4o-mini")
-  member(:gamma, Echo, provider: :openai, model: "gpt-4o-mini")
+  member(:alpha, Echo, provider: :openai, model: "gpt-5.4-mini")
+  member(:beta, Echo, provider: :openai, model: "gpt-5.4-mini")
+  member(:gamma, Echo, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
   round(:peer_review)
 
-  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-4o-mini")
+  chair(Synthesizer, id: :synthesizer, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [

@@ -7,14 +7,14 @@ defmodule Concilio.Councils.Debate do
 
   alias Concilio.Councils.Members.{Con, Moderator, Pro}
 
-  member(:pro, Pro, provider: :openai, model: "gpt-4o-mini")
-  member(:con, Con, provider: :openai, model: "gpt-4o-mini")
+  member(:pro, Pro, provider: :openai, model: "gpt-5.4-mini")
+  member(:con, Con, provider: :openai, model: "gpt-5.4-mini")
 
   round(:independent_analysis)
   round(:peer_review)
   round(:peer_review)
 
-  chair(Moderator, id: :moderator, provider: :openai, model: "gpt-4o-mini")
+  chair(Moderator, id: :moderator, provider: :openai, model: "gpt-5.4-mini")
 
   def samples do
     [
